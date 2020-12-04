@@ -14,6 +14,8 @@ with open('./data/driving_log.csv') as cvsfile:
 images = []
 steering_angles = []
 
+print('Creating dataset')
+
 for line in lines[1:]:
     image_center_file = line[0]
     image_left_file = line[1]
@@ -47,9 +49,28 @@ for line in lines[1:]:
     steering_angles.append(steering_left)
     steering_angles.append(steering_right)
 
+    # Flippint images
+    image_center_flipped = np.fliplr(image_center)
+    image_left_flipped = np.fliplr(image_left)
+    image_right_flipped = np.fliplr(image_right)
+
+    images.append(image_center_flipped)
+    images.append(image_left_flipped)
+    images.append(image_right_flipped)
+
+    steering_center_flipped = -steering_center
+    steering_left_flipped = -steering_left
+    steering_right_flipped = -steering_right
+
+    steering_angles.append(steering_center_flipped)
+    steering_angles.append(steering_left_flipped)
+    steering_angles.append(steering_right_flipped)
+
+print('Trainig network')
 
 X_train = np.array(images)
 y_train = np.array(steering_angles)
+
 
 nvidia_model = Sequential([
     Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)),
