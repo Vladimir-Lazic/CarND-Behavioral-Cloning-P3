@@ -49,22 +49,13 @@ for line in lines[1:]:
     steering_angles.append(steering_left)
     steering_angles.append(steering_right)
 
-    # Flippint images
-    image_center_flipped = np.fliplr(image_center)
-    image_left_flipped = np.fliplr(image_left)
-    image_right_flipped = np.fliplr(image_right)
-
-    images.append(image_center_flipped)
-    images.append(image_left_flipped)
-    images.append(image_right_flipped)
-
+    # Flipping only center image and steering
+    center_image_flipped = np.fliplr(image_center)
     steering_center_flipped = -steering_center
-    steering_left_flipped = -steering_left
-    steering_right_flipped = -steering_right
 
-    steering_angles.append(steering_center_flipped)
-    steering_angles.append(steering_left_flipped)
-    steering_angles.append(steering_right_flipped)
+    images.append(center_image_flipped)
+    steering_angles.append(steering_center_flipped) 
+
 
 print('Trainig network')
 
